@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<section class="section py-5">
+    <div class="row justify-content-center py-3">
+        <div class="card col-lg-8">
+            <div class="card-header"><a class="btn btn-dark" href="{% url 'index' %}">Continue Shopping</a></div>
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <span>Items: <b class="text-dark">{{ cart_items }}</b></span>
+                <span>Total: <b class="text-dark">NGN {{ order.get_cart_total }}</b></span>
+                <div class=""><a class="btn btn-success" href="{% url 'initiate-payment' %}">checkout</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">    
+      <div class="col-lg-10">
+
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">CheckOut</h5>
+
+            <!-- Default Table -->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Title</th>
+                  <th scope="col">Author</th>
+                  <th scope="col">Ref</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in items %}
+                    <tr>
+                        <th scope="row">{{ item.book.id }}</th>
+                        <td>{{ item.book.title }}</td>
+                        <td>{{ item.book.author }}</td>
+                        <td>{{ item.book.ref | truncatechars:30}}</td>
+                        <td>NGN {{ item.book.price | floatformat:2 }}</td>
+                        <td>
+                          <a href=""><i onclick="addCookieItem('{{ item.book.id }}', 'remove')" class="fa fa-arrow-down"></i></a> &nbsp; 
+                          {{ item.quantity }} &nbsp;
+                          <a href=""><i onclick="addCookieItem('{{ item.book.id }}', 'add')" class="fa fa-arrow-up"></i></a>
+                        </td>
+                        <td>NGN {{ item.get_total }}</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <!-- End Default Table Example -->
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+{% endblock %}

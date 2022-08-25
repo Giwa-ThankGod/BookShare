@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- Books Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        {% if books %}
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Books</h5>
+                <h1 id="book">All Books</h1>
+            </div>
+            <div class="row">
+                {% for book in books %}
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="rounded overflow-hidden mb-2">
+                        <img class="img-fluid" src="{{ book.imageUrl }}" alt="">
+                        <div class="bg-secondary p-4">
+                            <div class="d-flex justify-content-between mb-3">
+                                <small class="m-0"><i class="fa fa-users text-primary mr-2"></i>{{ book.author }}</small>
+                                <small class="m-0"><i class="far fa-clock text-primary mr-2"></i>01h 30m</small>
+                            </div>
+                            <a class="h5" href="">{{ book.title }}</a>
+                            <div class="border-top mt-4 pt-4">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <!-- <h6 class="m-0"><i class="fa fa-star text-primary mr-2"></i>4.5 <small>(250)</small></h6> -->
+                                    <h5 class="m-0"><i class=""></i>${{ book.price }}</h5>
+                                    <button onclick="addCookieItem('{{ book.id }}', 'add')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#cart"> 
+                                        <i class="fa fa-plus"></i> Cart
+                                    </button>
+                                    
+                                    <div class="modal fade" id="cart" tabindex="-1">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                                        <i class="fa fa-check-circle me-1"></i>
+                                                        Item successfully added to cart!!!
+                                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="container text-center">
+                    <div>
+                        {% if books.has_previous %}
+                            <a class="btn btn-dark mr-3 flex-start" href="{% url 'books' %}?page={{ books.previous_page_number }}"><i class="fa fa-angle-double-left"></i> Prev</a>
+                        {% endif %}
+                        
+                        {% if books.has_next %}
+                            <a class="btn btn-dark ml-3 flex-end" href="{% url 'books' %}?page={{ books.next_page_number }}">Next <i class="fa fa-angle-double-right"></i></a>
+                        {% endif %}
+                    </div>
+                    <p class="text-primary text-uppercase mt-3">Page {{ books.number }} of {{ books.paginator.num_pages}}</p>
+                    <p class="text-dark text-uppercase mt-3">Number of Pages: {{ books.paginator.num_pages}}</p>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center mb-5">
+                <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Books</h5>
+                <h1>No Book Available Yet For This Category</h1>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Books End -->
+{% endblock %}

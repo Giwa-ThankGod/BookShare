@@ -1,0 +1,102 @@
+{% extends 'admin_base.html' %}
+{% block content %}
+<main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>ADD BOOK</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">BOOK</li>
+          <li class="breadcrumb-item active">ADD BOOK</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">ADD BOOK</h5>
+
+                <!-- General Form Elements -->
+                <form method="post" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                <div class="row mb-2">
+                    <label class="col-sm-2 col-form-label">Category</label>
+                    <div class="col-sm-10">
+                    <select id="select" name="category" class="form-select" required multiple>
+                        <option disabled>select category</option>
+                        {% for category in category %}
+                        <option value="{{category.id}}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="text-center m-3">
+                        hold ctrl and click to pick multiple category
+                        <a href="{% url 'admin-add-categorys' %}" rel="noreferrer" target="_blank" class="btn btn-sm btn-primary mb-2">
+                            <i class="bi bi-plus"></i>
+                            category
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">Author</label>
+                    <div class="col-sm-10">
+                    <select id="select" name="author" class="form-select" required>
+                        <option selected disabled>choose author</option>
+                        {% for author in author %}
+                        <option value="{{author.name}}">{{ author.name }}</option>
+                        {% endfor %}
+                    </select>
+                    <a href="{% url 'admin-add-authors' %}" rel="noreferrer" target="_blank" class="btn btn-sm btn-primary mt-2">
+                        <i class="bi bi-plus"></i>
+                        author
+                    </a>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputText" class="col-sm-2 col-form-label">Title:</label>
+                    <div class="col-sm-10">
+                    {{ book_form.title }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Description:</label>
+                    <div class="col-sm-10">
+                        {{ book_form.description }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputPassword" class="col-sm-2 col-form-label">Price:</label>
+                    <div class="col-sm-10">
+                        {{ book_form.price }}
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Cover:</label>
+                    <div class="col-sm-10">
+                        {{ book_form.cover }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="col-lg-4 btn btn-primary">Save</button>
+                    <!-- <button type="submit" class="btn btn-primary">Save and Add Anoter</button> -->
+                </div>
+
+                </form><!-- End General Form Elements -->
+
+            </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</main><!-- End #main -->
+{% endblock %}

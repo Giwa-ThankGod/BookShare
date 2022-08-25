@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="site-section pt-5">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+  
+              <form method="post">
+                {% csrf_token %}
+                <div class="p-3 p-lg-5 border">
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                      {{ payment_form.first_name }}
+                    </div>
+                    <div class="col-md-6">
+                      <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                      {{ payment_form.last_name }}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-6">
+                      <label for="c_email" class="text-black">Email <span class="text-danger">*</span></label>
+                      {{ payment_form.email }}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="c_lname" class="text-black">Phone <span class="text-danger">*</span></label>
+                        {{ payment_form.phone }}
+                      </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-md-12">
+                        <label for="c_lname" class="text-black">Shipping_Address <span class="text-danger">*</span></label>
+                        {{ payment_form.shipping_address }}
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-lg-12">
+                      <input type="submit" class="btn btn-info btn-lg btn-block" value="Paystack">
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-5 ml-auto">
+              <div class="card">
+                <div class="card-header"><a class="btn btn-secondary" href="{% url 'index' %}">Back to Cart</a></div>
+                <div class="card-body">
+                  <h5 class="card-title font-weight-semi-bold">Order Summary</h5>
+                </div>
+                <div class="card-footer d-block">
+                    <span class="font-weight-semi-bold">Items: {{ cart_items }}</span><br>
+                    <span class="font-weight-semi-bold">Total: NGN{{ order.get_cart_total }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock %}

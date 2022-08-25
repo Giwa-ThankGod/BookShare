@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-lg-5">
+            <div class="card border-0">
+                <div id="msg" class="card-header bg-light text-center p-4">
+                    <h3 class="m-0">MAKE PAYMENT</h3>
+                </div>
+                <div class="card-body rounded-bottom bg-secondary p-5">
+                    <h5>Make Payment for : NGN {{ order.get_cart_total }}</h5>
+                    <script src="https://js.paystack.co/v1/inline.js"></script>
+                    <p class="text-center"><button onclick="paywithPaystack()" id="django-paystack-button" class="btn btn-success">Make Payment</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function paywithPaystack(){
+        let currency = 'NGN'
+        let plan = ''
+        let ref = '{{ payment.ref }}'
+        let obj = {
+            key: '{{ paystack_public_key }}',
+            email: '{{ payment.email }}',
+            amount: '{{ payment.amount_value }}',
+            ref: ref,
+            callback: function(response){
+                cart = {}
+                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain;path=/" //Clears Cart
+
+                window.location.href = '{% url "verify-payment" payment.ref %}'
+            }
+        }
+
+        if (Boolean(currency)){
+            obj.currency = currency.toUpperCase()
+        }
+
+        if (Boolean(plan)){
+            obj.plan = plan;
+        }
+
+        var handler = PaystackPop.setup(obj);
+        handler.openIframe()
+    }
+
+
+</script>
+{% endblock %}

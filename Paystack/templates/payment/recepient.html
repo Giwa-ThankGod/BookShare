@@ -1,0 +1,12 @@
+<h2 style="color: rgb(9, 134, 59);">Transaction Successful!!!</h2>
+Thank You For  Your Purchase!!!
+
+Order Items : {{ cartItems }}
+
+{% for item in items %}
+    Author : {{ item.book.author }} | 
+    Title : {{ item.book.title }}
+    Ref : {{ item.book.ref }}
+{% endfor %}
+
+Don't forget KNOWLEDGE IS POWER!!!
